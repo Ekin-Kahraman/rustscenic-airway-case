@@ -1,0 +1,8 @@
+results/
+figures/
+*.h5ad
+*.parquet
+*.csv
+__pycache__/
+.venv/
+*.egg-info/
