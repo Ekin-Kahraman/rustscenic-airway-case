@@ -24,4 +24,23 @@ authors:
 references:
   - type: article
     title: "Impaired local intrinsic immunity to SARS-CoV-2 infection in severe COVID-19"
+    authors:
+      - family-names: "Ziegler"
+        given-names: "Carly G. K."
+      - family-names: "Miao"
+        given-names: "Vincent N."
+      - family-names: "Owings"
+        given-names: "Anna H."
+      - family-names: "Navia"
+        given-names: "Andrew W."
+      - family-names: "Tang"
+        given-names: "Ying"
+      - family-names: "Bromley"
+        given-names: "Joshua D."
+      - family-names: "Lotfy"
+        given-names: "Peter"
+      - family-names: "Sloan"
+        given-names: "Meredith"
+    journal: "Cell"
+    year: 2021
     doi: "10.1016/j.cell.2021.07.023"
