@@ -1,0 +1,53 @@
+{
+  "dataset": "Ziegler 2021 nasopharyngeal scRNA-seq",
+  "n_cells_used": 31602,
+  "n_regulons": 59,
+  "per_cell_pearson": {
+    "rust_vs_py_unit": {
+      "mean": 0.9843234640411745,
+      "median": 0.9968624523819597,
+      "pct_gt_95": 91.69356369850009
+    },
+    "rust_vs_py_weighted": {
+      "mean": 0.9487388370644931,
+      "median": 0.9646973351488327,
+      "pct_gt_95": 71.62521359407631
+    }
+  },
+  "per_regulon_pearson": {
+    "rust_vs_py_unit": {
+      "mean": 0.9523466081634706,
+      "median": 0.9879516309311428
+    },
+    "rust_vs_py_weighted": {
+      "mean": 0.915757596509034,
+      "median": 0.9527474715274986
+    }
+  },
+  "argmax_match": {
+    "rust_vs_py_unit": 0.8539965824947788,
+    "rust_vs_py_weighted": 0.5013606733751028,
+    "py_unit_vs_py_weighted": 0.49335485095880005
+  },
+  "runtime_memory": {
+    "pyscenic_unit": {
+      "wall_s": 6.81,
+      "peak_rss_gb": 3.7
+    },
+    "pyscenic_weighted": {
+      "wall_s": 5.29,
+      "peak_rss_gb": 3.76
+    },
+    "rustscenic": {
+      "wall_s": 0.25,
+      "peak_rss_gb": 3.76
+    }
+  },
+  "canonical_tf_hit_counts": {
+    "pyscenic_unit": 8,
+    "pyscenic_weighted": 9,
+    "rustscenic": 8
+  },
+  "arboreto_runs_in_pyscenic_env": false,
+  "arboreto_failure_mode": "ImportError: Dask requires pandas>=2.0.0 but pyscenic pins pandas==1.5.3 (dask_expr incompatibility)"
+}

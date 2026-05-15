@@ -62,13 +62,12 @@ def main() -> None:
     assert comparison["per_cell_pearson"]["rust_vs_py_unit"]["mean"] > 0.95
 
     required_results = [
-        RESULTS / "grn.parquet",
-        RESULTS / "auc.parquet",
         RESULTS / "regulons.json",
         RESULTS / "z_activity_per_coarse_celltype.csv",
         RESULTS / "mean_activity_per_coarse_celltype.csv",
-        COMPARISON / "auc_pyscenic_unit.parquet",
-        COMPARISON / "auc_pyscenic_weighted.parquet",
+        RESULTS / "mean_activity_per_detailed_celltype.csv",
+        RESULTS / "comparison_run.log",
+        RESULTS / "run.log",
         COMPARISON / "per_cell_pearson_summary.csv",
         COMPARISON / "per_regulon_pearson_summary.csv",
     ]

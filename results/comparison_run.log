@@ -1,0 +1,80 @@
+/private/tmp/rustscenic-ref3/lib/python3.11/site-packages/ctxcore/__init__.py:5: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  from pkg_resources import DistributionNotFound, get_distribution
+[1/7] reloading Ziegler + running same preprocess to get matched adata...
+      matched adata: (31602, 3044)
+[2/7] loading cached rustscenic GRN + regulons from earlier run...
+      131,689 edges, 59 regulons
+[3/7] building pyscenic Regulon objects...
+      built 59 weighted + unit regulons
+[4/7] pyscenic.aucell noweights=True (matches rustscenic kernel)...
+  0%|          | 0/59 [00:00<?, ?it/s]  2%|▏         | 1/59 [00:01<01:08,  1.18s/it]  7%|▋         | 4/59 [00:01<00:14,  3.89it/s] 14%|█▎        | 8/59 [00:01<00:06,  8.19it/s] 19%|█▊        | 11/59 [00:01<00:04, 10.89it/s] 24%|██▎       | 14/59 [00:01<00:03, 13.78it/s] 29%|██▉       | 17/59 [00:01<00:02, 16.59it/s] 34%|███▍      | 20/59 [00:01<00:02, 18.75it/s] 39%|███▉      | 23/59 [00:02<00:01, 20.39it/s] 44%|████▍     | 26/59 [00:02<00:01, 21.41it/s] 49%|████▉     | 29/59 [00:02<00:01, 23.14it/s] 54%|█████▍    | 32/59 [00:02<00:01, 24.06it/s] 59%|█████▉    | 35/59 [00:02<00:01, 23.32it/s] 64%|██████▍   | 38/59 [00:02<00:00, 24.46it/s] 69%|██████▉   | 41/59 [00:02<00:00, 24.17it/s] 75%|███████▍  | 44/59 [00:02<00:00, 24.22it/s] 81%|████████▏ | 48/59 [00:03<00:00, 26.28it/s] 86%|████████▋ | 51/59 [00:03<00:00, 26.16it/s] 92%|█████████▏| 54/59 [00:03<00:00, 26.38it/s] 97%|█████████▋| 57/59 [00:03<00:00, 27.20it/s]100%|██████████| 59/59 [00:03<00:00, 17.36it/s]
+      6.81s, shape (31602, 59)
+[5/7] pyscenic.aucell noweights=False (realistic pyscenic default)...
+  0%|          | 0/59 [00:00<?, ?it/s]  5%|▌         | 3/59 [00:00<00:02, 23.89it/s] 10%|█         | 6/59 [00:00<00:02, 26.48it/s] 15%|█▌        | 9/59 [00:00<00:01, 25.86it/s] 20%|██        | 12/59 [00:00<00:01, 24.89it/s] 25%|██▌       | 15/59 [00:00<00:01, 25.47it/s] 31%|███       | 18/59 [00:00<00:01, 25.45it/s] 36%|███▌      | 21/59 [00:00<00:01, 25.02it/s] 41%|████      | 24/59 [00:00<00:01, 24.90it/s] 46%|████▌     | 27/59 [00:01<00:01, 25.86it/s] 51%|█████     | 30/59 [00:01<00:01, 25.28it/s] 56%|█████▌    | 33/59 [00:01<00:01, 25.27it/s] 61%|██████    | 36/59 [00:01<00:00, 25.72it/s] 66%|██████▌   | 39/59 [00:01<00:00, 25.38it/s] 71%|███████   | 42/59 [00:01<00:00, 25.39it/s] 76%|███████▋  | 45/59 [00:01<00:00, 25.93it/s] 81%|████████▏ | 48/59 [00:01<00:00, 26.93it/s] 86%|████████▋ | 51/59 [00:01<00:00, 27.06it/s] 92%|█████████▏| 54/59 [00:02<00:00, 27.64it/s] 98%|█████████▊| 58/59 [00:02<00:00, 28.49it/s]100%|██████████| 59/59 [00:02<00:00, 26.23it/s]
+      5.29s, shape (31602, 59)
+[6/7] rustscenic.aucell (for runtime comparison in same env)...
+      0.25s, shape (31602, 59)
+[7/7] comparing outputs...
+
+=== Per-cell Pearson (rustscenic vs pyscenic) ===
+  rust vs py-unit:     mean 0.9843  median 0.9969  >0.95 91.7%
+  rust vs py-weighted: mean 0.9487  median 0.9647  >0.95 71.6%
+
+=== Per-regulon Pearson ===
+  rust vs py-unit:     mean 0.9523  median 0.9880
+  rust vs py-weighted: mean 0.9158  median 0.9527
+
+=== Argmax-regulon per cell agreement ===
+  rust == py-unit:     85.4%
+  rust == py-weighted: 50.1%
+  py-unit == py-weighted: 49.3%
+
+=== Runtime (on 31,602 cells × 59 regulons) ===
+  pyscenic_unit              6.81s   peak RSS 3.70 GB
+  pyscenic_weighted          5.29s   peak RSS 3.76 GB
+  rustscenic                 0.25s   peak RSS 3.76 GB
+
+=== Canonical TF z-score in expected cell type ===
+method  pyscenic_unit  pyscenic_weighted  rustscenic
+tf                                                  
+ASCL3            3.85               3.87        3.82
+FOXJ1            3.32               3.37        3.32
+CEBPB            3.20               3.20        3.21
+TBX21            3.06               3.13        3.04
+EOMES            3.74               3.11        2.83
+SPI1             2.73               2.71        2.73
+TP63             2.61               2.92        2.61
+STAT1            0.97               1.01        0.75
+RUNX3            1.92               1.85        1.97
+SPDEF            1.55               2.36        1.56
+MYB              0.91               0.91        0.91
+IRF7            -0.34              -0.48       -0.46
+SOX2            -0.41              -0.42       -0.40
+PAX5            -0.53              -0.68       -0.34
+
+=== Canonical TF hit (top-ranked cell type matches expected) ===
+method  pyscenic_unit  pyscenic_weighted  rustscenic
+tf                                                  
+ASCL3            True               True        True
+FOXJ1            True               True        True
+CEBPB            True               True        True
+TBX21            True               True        True
+EOMES            True               True        True
+SPI1             True               True        True
+TP63             True               True        True
+STAT1           False              False       False
+RUNX3            True               True        True
+SPDEF           False               True       False
+MYB             False              False       False
+IRF7            False              False       False
+SOX2            False              False       False
+PAX5            False              False       False
+
+hits per method:
+method
+pyscenic_unit        8
+pyscenic_weighted    9
+rustscenic           8
+dtype: int64
+
+saved /Users/ekin/rustscenic-airway-case/results/comparison/summary.json

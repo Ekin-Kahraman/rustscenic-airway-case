@@ -1,0 +1,43 @@
+tf,expected,method,z_in_expected,top_ct,hit
+ASCL3,Ionocytes,rustscenic,3.8236846923828125,Ionocytes,True
+FOXJ1,Ciliated Cells,rustscenic,3.324153184890747,Ciliated Cells,True
+CEBPB,Macrophages,rustscenic,3.2050211429595947,Macrophages,True
+TBX21,T Cells,rustscenic,3.0432779788970947,T Cells,True
+EOMES,T Cells,rustscenic,2.8334829807281494,T Cells,True
+SPI1,Macrophages,rustscenic,2.7330358028411865,Macrophages,True
+TP63,Basal Cells,rustscenic,2.6056694984436035,Basal Cells,True
+STAT1,Ciliated Cells,rustscenic,0.7486044764518738,Goblet Cells,False
+RUNX3,T Cells,rustscenic,1.973331332206726,T Cells,True
+SPDEF,Goblet Cells,rustscenic,1.5576519966125488,Ciliated Cells,False
+MYB,Deuterosomal Cells,rustscenic,0.9089795351028442,Ciliated Cells,False
+IRF7,Ciliated Cells,rustscenic,-0.464449942111969,Goblet Cells,False
+SOX2,Basal Cells,rustscenic,-0.40009188652038574,Ciliated Cells,False
+PAX5,B Cells,rustscenic,-0.3389960825443268,Enteroendocrine Cells,False
+ASCL3,Ionocytes,pyscenic_unit,3.8470505955680214,Ionocytes,True
+FOXJ1,Ciliated Cells,pyscenic_unit,3.322808361755412,Ciliated Cells,True
+CEBPB,Macrophages,pyscenic_unit,3.197225099406305,Macrophages,True
+TBX21,T Cells,pyscenic_unit,3.062182715485808,T Cells,True
+EOMES,T Cells,pyscenic_unit,3.744868317152475,T Cells,True
+SPI1,Macrophages,pyscenic_unit,2.7302320820045933,Macrophages,True
+TP63,Basal Cells,pyscenic_unit,2.6118674995538878,Basal Cells,True
+STAT1,Ciliated Cells,pyscenic_unit,0.9679117163475668,Goblet Cells,False
+RUNX3,T Cells,pyscenic_unit,1.9155368666752948,T Cells,True
+SPDEF,Goblet Cells,pyscenic_unit,1.5460494133527465,Ciliated Cells,False
+MYB,Deuterosomal Cells,pyscenic_unit,0.9100245042000394,Ciliated Cells,False
+IRF7,Ciliated Cells,pyscenic_unit,-0.3407644013237859,Goblet Cells,False
+SOX2,Basal Cells,pyscenic_unit,-0.4070945929200926,Ciliated Cells,False
+PAX5,B Cells,pyscenic_unit,-0.5265777868921432,Enteroendocrine Cells,False
+ASCL3,Ionocytes,pyscenic_weighted,3.8702961340899242,Ionocytes,True
+FOXJ1,Ciliated Cells,pyscenic_weighted,3.3687866479604205,Ciliated Cells,True
+CEBPB,Macrophages,pyscenic_weighted,3.200022623521131,Macrophages,True
+TBX21,T Cells,pyscenic_weighted,3.1265440441266477,T Cells,True
+EOMES,T Cells,pyscenic_weighted,3.110668197467909,T Cells,True
+SPI1,Macrophages,pyscenic_weighted,2.70746186861515,Macrophages,True
+TP63,Basal Cells,pyscenic_weighted,2.9166486677458003,Basal Cells,True
+STAT1,Ciliated Cells,pyscenic_weighted,1.013323415363547,Goblet Cells,False
+RUNX3,T Cells,pyscenic_weighted,1.850617897345942,T Cells,True
+SPDEF,Goblet Cells,pyscenic_weighted,2.361601762205442,Goblet Cells,True
+MYB,Deuterosomal Cells,pyscenic_weighted,0.9057013667766503,Ciliated Cells,False
+IRF7,Ciliated Cells,pyscenic_weighted,-0.48052278369092616,Goblet Cells,False
+SOX2,Basal Cells,pyscenic_weighted,-0.41762527749658185,Ciliated Cells,False
+PAX5,B Cells,pyscenic_weighted,-0.6781693849560202,Developing Ciliated Cells,False

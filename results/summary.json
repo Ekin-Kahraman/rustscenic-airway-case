@@ -1,0 +1,12 @@
+{
+  "dataset": "Ziegler 2021 nasopharyngeal scRNA-seq (BCH/Broad/UMMC)",
+  "n_cells_used": 31602,
+  "n_genes_used": 3044,
+  "n_donors": 58,
+  "n_tfs_in_grn": 59,
+  "n_regulons": 59,
+  "grn_wall_s": 26.5,
+  "aucell_wall_s": 0.3,
+  "expected_tf_hit_rate": "8/14",
+  "expected_tf_hit_pct": 57.1
+}
