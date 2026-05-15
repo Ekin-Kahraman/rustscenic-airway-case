@@ -13,7 +13,7 @@
 
 ## Head-to-head: rustscenic vs pyscenic.aucell
 
-Identical input on both sides — same 59 regulons built from rustscenic's GRN adjacencies, same 31,602-cell log-normalised expression matrix. The ONLY differences are (a) the AUCell implementation and (b) pyscenic's optional GRN-importance weights.
+Identical input on both sides — same 59 regulons built from rustscenic's GRN adjacencies, same 31,602-cell log-normalised expression matrix. The ONLY differences are (a) the AUCell implementation and (b) pyscenic's optional GRN-importance weights. The pinned reference stack is in `reference/requirements-pyscenic-aucell.txt` and is smoke-tested by CI on a tiny RustScenic/pySCENIC AUCell comparison.
 
 ### Agreement metrics
 

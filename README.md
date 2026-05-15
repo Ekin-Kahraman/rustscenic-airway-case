@@ -47,7 +47,7 @@ See [`figures/fig6_covid_differential.png`](figures/fig6_covid_differential.png)
 Requires:
 1. The Ziegler h5ad from the [covid-airway-deconvolution](https://github.com/Ekin-Kahraman/covid-airway-deconvolution) repo
 2. rustscenic ≥ 0.4.4 (`pip install -r requirements.txt`)
-3. For head-to-head: a separate env with pyscenic installed (for `pyscenic.aucell`)
+3. For head-to-head: the pinned pySCENIC reference env in [`reference/`](reference/)
 
 Run in order:
 
@@ -59,6 +59,13 @@ python scripts/03_headtohead_pyscenic_aucell.py
 python scripts/04_comparison_figures.py
 python scripts/05_covid_differential_regulons.py
 python scripts/validate_outputs.py
+```
+
+To verify only the cross-tool AUCell environment:
+
+```bash
+python -m pip install -r reference/requirements-pyscenic-aucell.txt
+python reference/smoke_pyscenic_reference.py
 ```
 
 ## Cross-references
