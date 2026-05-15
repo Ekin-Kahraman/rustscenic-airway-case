@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import csv
 import json
+import struct
 from pathlib import Path
 
 
@@ -47,6 +48,26 @@ def validate_png(path: Path) -> None:
         signature = handle.read(8)
     if signature != b"\x89PNG\r\n\x1a\n":
         raise AssertionError(f"{path} is not a PNG")
+    with path.open("rb") as handle:
+        handle.read(16)
+        width, height = struct.unpack(">II", handle.read(8))
+    if width < 800 or height < 500:
+        raise AssertionError(f"{path} is too small for publication review: {width}x{height}")
+
+
+def validate_run_log(summary: dict) -> None:
+    run_log = RESULTS / "run.log"
+    require(run_log, min_bytes=100)
+    text = run_log.read_text(encoding="utf-8")
+    required_snippets = [
+        f'"n_cells_used": {summary["n_cells_used"]}',
+        f'"n_regulons": {summary["n_regulons"]}',
+        f'"grn_wall_s": {summary["grn_wall_s"]}',
+        f'"expected_tf_hit_rate": "{summary["expected_tf_hit_rate"]}"',
+    ]
+    for snippet in required_snippets:
+        if snippet not in text:
+            raise AssertionError(f"{run_log} does not match summary.json: missing {snippet}")
 
 
 def main() -> None:
@@ -55,6 +76,7 @@ def main() -> None:
     assert summary["n_donors"] == 58
     assert summary["n_regulons"] >= 50
     assert summary["expected_tf_hit_rate"].startswith("8/")
+    validate_run_log(summary)
 
     comparison = load_json(COMPARISON / "summary.json")
     assert comparison["n_cells_used"] == 31602

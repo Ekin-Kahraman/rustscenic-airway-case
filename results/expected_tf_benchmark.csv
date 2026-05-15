@@ -1,15 +1,15 @@
 TF,expected_celltype,observed_top_celltype,z_in_expected,z_of_top,lit_reference
-FOXJ1,Ciliated Cells,Ciliated Cells,3.324153,3.324153,You & Brody 2007 Physiol Rev — FOXJ1 master regulator of motile cilia
-SPDEF,Goblet Cells,Ciliated Cells,1.557652,2.22751,Park et al 2007 JCI — SPDEF drives goblet metaplasia
-TP63,Basal Cells,Basal Cells,2.6056695,2.6056695,Daniely et al 2004 AJP — p63 airway basal cell marker
-SOX2,Basal Cells,Ciliated Cells,-0.40009198,3.2567027,Que et al 2009 Development — SOX2 maintains proximal airway identity
-MYB,Deuterosomal Cells,Ciliated Cells,0.90897954,3.4133303,Pan et al 2014 Nature — MYB drives multiciliogenesis
-ASCL3,Ionocytes,Ionocytes,3.8236847,3.8236847,Plasschaert et al 2018 Nature — ASCL3 ionocyte lineage
-STAT1,Interferon Responsive Ciliated Cells,detailed-level,2.0178833,Interferon Responsive Ciliated Cells,Canonical IFN-I response
-IRF7,Interferon Responsive Ciliated Cells,detailed-level,0.60696346,HOPX high Squamous Cells,Canonical IFN-I response
-SPI1,Macrophages,Macrophages,2.7330356,2.7330356,Scott et al 1994 Science — PU.1/SPI1 myeloid master
-CEBPB,Macrophages,Macrophages,3.2050211,3.2050211,Akira et al — myeloid/inflammatory
-PAX5,B Cells,Enteroendocrine Cells,-0.338996,3.439857,Urbánek et al 1994 — PAX5 B-lymphoid
-TBX21,T Cells,T Cells,3.043278,3.043278,T-bet Th1/NK cytotoxic programme
-EOMES,T Cells,T Cells,2.833483,2.833483,Eomes CD8/NK cytotoxic
-RUNX3,T Cells,T Cells,1.9733311,1.9733311,Egawa et al 2007 — CD8 T cell specification
+FOXJ1,Ciliated Cells,Ciliated Cells,3.324153,3.324152946472168,You & Brody 2007 Physiol Rev — FOXJ1 master regulator of motile cilia
+SPDEF,Goblet Cells,Ciliated Cells,1.557652,2.2275099754333496,Park et al 2007 JCI — SPDEF drives goblet metaplasia
+TP63,Basal Cells,Basal Cells,2.6056697,2.6056697368621826,Daniely et al 2004 AJP — p63 airway basal cell marker
+SOX2,Basal Cells,Ciliated Cells,-0.40009195,3.256702423095703,Que et al 2009 Development — SOX2 maintains proximal airway identity
+MYB,Deuterosomal Cells,Ciliated Cells,0.9089795,3.413330316543579,Pan et al 2014 Nature — MYB drives multiciliogenesis
+ASCL3,Ionocytes,Ionocytes,3.8236852,3.8236851692199707,Plasschaert et al 2018 Nature — ASCL3 ionocyte lineage
+STAT1,Ciliated Cells,Goblet Cells,0.7486045,1.3707796335220337,Canonical IFN-I response
+IRF7,Ciliated Cells,Goblet Cells,-0.46444994,2.1896402835845947,Canonical IFN-I response
+SPI1,Macrophages,Macrophages,2.7330358,2.7330358028411865,Scott et al 1994 Science — PU.1/SPI1 myeloid master
+CEBPB,Macrophages,Macrophages,3.2050211,3.2050211429595947,Akira et al — myeloid/inflammatory
+PAX5,B Cells,Enteroendocrine Cells,-0.33899602,3.439857244491577,Urbánek et al 1994 — PAX5 B-lymphoid
+TBX21,T Cells,T Cells,3.043278,3.0432779788970947,T-bet Th1/NK cytotoxic programme
+EOMES,T Cells,T Cells,2.833483,2.8334829807281494,Eomes CD8/NK cytotoxic
+RUNX3,T Cells,T Cells,1.9733311,1.973331093788147,Egawa et al 2007 — CD8 T cell specification

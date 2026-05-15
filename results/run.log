@@ -1,15 +1,14 @@
-OMP: Info #276: omp_set_nested routine deprecated, please use omp_set_max_active_levels instead.
 [rustscenic.grn] fitting GRNBoost2 — 31,602 cells × 3,044 genes × 59 TFs × n_estimators=500 (early-stop window=25). Running in parallel, this can take seconds to tens of minutes depending on shape...
-[rustscenic.grn] done in 26.4s — 131,689 edges.
+[rustscenic.grn] done in 34.9s — 131,689 edges.
 [1/8] loading ziegler2021_nasopharyngeal.h5ad...
-     shape: (32588, 32871)  loaded in 0.7s
+     shape: (32588, 32871)  loaded in 0.9s
 [2/8] keeping epithelial + T + Macrophage + B + ionocyte (drop erythroid for clarity)...
      after filter: (31602, 32871)
 [3/8] scanpy preprocess + HVG∪TFs...
      after HVG∪TFs: (31602, 3044)
      TFs in HVG-filtered matrix: 59/60
 [4/8] rustscenic.grn.infer...
-     131,689 edges in 26.5s
+     131,689 edges in 35.0s
 [5/8] building top-50-target regulons per TF...
      regulons: 59
 [6/8] rustscenic.aucell per cell...
@@ -19,21 +18,21 @@ OMP: Info #276: omp_set_nested routine deprecated, please use omp_set_max_active
 [8/8] checking expected-TF benchmarks against lit:
      (z-score ≥ 1 means the TF's regulon is 1+ sigma above the mean celltype activity)
 
-   TF                    expected_celltype observed_top_celltype  z_in_expected                             z_of_top
-FOXJ1                       Ciliated Cells        Ciliated Cells       3.324153                             3.324153
-SPDEF                         Goblet Cells        Ciliated Cells       1.557652                              2.22751
- TP63                          Basal Cells           Basal Cells       2.605669                             2.605669
- SOX2                          Basal Cells        Ciliated Cells      -0.400092                             3.256703
-  MYB                   Deuterosomal Cells        Ciliated Cells       0.908980                              3.41333
-ASCL3                            Ionocytes             Ionocytes       3.823685                             3.823685
-STAT1 Interferon Responsive Ciliated Cells        detailed-level       2.017883 Interferon Responsive Ciliated Cells
- IRF7 Interferon Responsive Ciliated Cells        detailed-level       0.606963             HOPX high Squamous Cells
- SPI1                          Macrophages           Macrophages       2.733036                             2.733036
-CEBPB                          Macrophages           Macrophages       3.205021                             3.205021
- PAX5                              B Cells Enteroendocrine Cells      -0.338996                             3.439857
-TBX21                              T Cells               T Cells       3.043278                             3.043278
-EOMES                              T Cells               T Cells       2.833483                             2.833483
-RUNX3                              T Cells               T Cells       1.973331                             1.973331
+   TF  expected_celltype observed_top_celltype  z_in_expected  z_of_top
+FOXJ1     Ciliated Cells        Ciliated Cells       3.324153  3.324153
+SPDEF       Goblet Cells        Ciliated Cells       1.557652  2.227510
+ TP63        Basal Cells           Basal Cells       2.605670  2.605670
+ SOX2        Basal Cells        Ciliated Cells      -0.400092  3.256702
+  MYB Deuterosomal Cells        Ciliated Cells       0.908979  3.413330
+ASCL3          Ionocytes             Ionocytes       3.823685  3.823685
+STAT1     Ciliated Cells          Goblet Cells       0.748604  1.370780
+ IRF7     Ciliated Cells          Goblet Cells      -0.464450  2.189640
+ SPI1        Macrophages           Macrophages       2.733036  2.733036
+CEBPB        Macrophages           Macrophages       3.205021  3.205021
+ PAX5            B Cells Enteroendocrine Cells      -0.338996  3.439857
+TBX21            T Cells               T Cells       3.043278  3.043278
+EOMES            T Cells               T Cells       2.833483  2.833483
+RUNX3            T Cells               T Cells       1.973331  1.973331
 
 === SUMMARY ===
 {
@@ -43,10 +42,10 @@ RUNX3                              T Cells               T Cells       1.973331 
   "n_donors": 58,
   "n_tfs_in_grn": 59,
   "n_regulons": 59,
-  "grn_wall_s": 26.5,
+  "grn_wall_s": 35.0,
   "aucell_wall_s": 0.3,
   "expected_tf_hit_rate": "8/14",
   "expected_tf_hit_pct": 57.1
 }
 
-artefacts in /Users/ekin/rustscenic-airway-case/results
+artefacts in results

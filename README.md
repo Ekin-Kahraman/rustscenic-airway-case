@@ -5,7 +5,7 @@
 1. **Tool validation** — head-to-head of [rustscenic](https://github.com/Ekin-Kahraman/rustscenic) against pyscenic on a published 58-donor, 32,588-cell airway atlas (Ziegler et al. 2021 *Cell*). Same input, same regulons, same env, isolated AUCell kernel. Answers: "does rustscenic produce pyscenic's numbers on real atlas-scale data?"
 2. **Biology** — COVID+ vs COVID− differential regulon analysis, extending the [covid-airway-deconvolution](https://github.com/Ekin-Kahraman/covid-airway-deconvolution) project from "which cells are perturbed" to "which regulatory programmes rewire during SARS-CoV-2 infection". Candidate for a standalone paper.
 
-This repo is **private** — not for public release until both rustscenic and covid-airway-deconvolution are ready to cite it.
+The source h5ad is not committed. To rerun the analysis, place the Ziegler file locally and set `ZIEGLER_H5AD=/path/to/ziegler2021_nasopharyngeal.h5ad`, or keep the sibling-repo default at `../covid-airway-deconvolution/data/ziegler2021_nasopharyngeal.h5ad`.
 
 ## Headline (tool validation)
 
@@ -46,13 +46,27 @@ See [`figures/fig6_covid_differential.png`](figures/fig6_covid_differential.png)
 
 Requires:
 1. The Ziegler h5ad from the [covid-airway-deconvolution](https://github.com/Ekin-Kahraman/covid-airway-deconvolution) repo
-2. rustscenic ≥ 0.1.0 (`pip install rustscenic`)
+2. rustscenic ≥ 0.4.4 (`pip install -r requirements.txt`)
 3. For head-to-head: a separate env with pyscenic installed (for `pyscenic.aucell`)
 
-Run in order: `01 → 02 → 03 → 04 → 05`.
+Run in order:
+
+```bash
+export ZIEGLER_H5AD=/path/to/ziegler2021_nasopharyngeal.h5ad
+python scripts/01_grn_aucell_celltype_regulons.py 2>&1 | tee results/run.log
+python scripts/02_make_figures.py
+python scripts/03_headtohead_pyscenic_aucell.py
+python scripts/04_comparison_figures.py
+python scripts/05_covid_differential_regulons.py
+python scripts/validate_outputs.py
+```
 
 ## Cross-references
 
 - Tool: [`Ekin-Kahraman/rustscenic`](https://github.com/Ekin-Kahraman/rustscenic) — where the Ziegler numbers + figures also live, as `validation/ziegler_headtohead_2026-04-19.md`
 - Source dataset: [`Ekin-Kahraman/covid-airway-deconvolution`](https://github.com/Ekin-Kahraman/covid-airway-deconvolution) — cell-type deconvolution of GSE152075 using Ziegler reference
 - Upstream biology: Ziegler et al. 2021 *Cell* — the scRNA-seq atlas this uses
+
+## Licence and citation
+
+MIT. Citation metadata is in [`CITATION.cff`](CITATION.cff).

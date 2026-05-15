@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+message: "If you use this case study, please cite the repository, rustscenic, and the Ziegler et al. source dataset."
+title: "rustscenic airway validation case study on Ziegler 2021 nasopharyngeal scRNA-seq"
+type: software
+license: MIT
+repository-code: "https://github.com/Ekin-Kahraman/rustscenic-airway-case"
+url: "https://github.com/Ekin-Kahraman/rustscenic-airway-case"
+abstract: "A reproducible case study comparing rustscenic AUCell output against pySCENIC on the Ziegler 2021 nasopharyngeal single-cell atlas, with COVID-positive versus COVID-negative differential regulon analysis."
+keywords:
+  - bioinformatics
+  - single-cell RNA-seq
+  - SCENIC
+  - pySCENIC
+  - AUCell
+  - COVID-19
+  - airway
+authors:
+  - family-names: "Kahraman"
+    given-names: "Ekin"
+    affiliation: "University of East Anglia"
+    email: "evk23umu@uea.ac.uk"
+references:
+  - type: article
+    title: "Impaired local intrinsic immunity to SARS-CoV-2 infection in severe COVID-19"
+    doi: "10.1016/j.cell.2021.07.023"

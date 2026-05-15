@@ -151,13 +151,13 @@ This analysis shows:
 |---|---|---:|---|
 | Load Ziegler h5ad | scanpy | 2.6 s | 672 MB file |
 | Preprocess (normalize, log, HVG∪TFs) | scanpy | 8 s | 3,044 genes kept |
-| GRN inference | rustscenic.grn (n_est=500) | 26.5 s | 131,689 edges |
+| GRN inference | rustscenic.grn (n_est=500) | ~40 s | 131,689 edges |
 | Build regulons (top-50 targets) | Python | <1 s | 59 regulons |
-| AUCell (per-cell regulon activity) | rustscenic.aucell | **0.25 s** | chunk_size=5,000 |
+| AUCell (per-cell regulon activity) | rustscenic.aucell | **~0.2 s** | chunk_size=5,000 |
 | pyscenic.aucell unit-weight comparison | pyscenic | 6.81 s | head-to-head reference |
 | pyscenic.aucell weighted comparison | pyscenic | 5.29 s | realistic pyscenic default |
 | COVID± differential per cell type | scipy Wilcoxon + BH-FDR | 10 s | 11 cell types × 59 regulons |
-| **Total end-to-end** |  | **~65 s** | fits in a coffee break |
+| **Total end-to-end** |  | **~80 s** | fits in a coffee break |
 
 ## Friction discovered (fed back to rustscenic v0.2 roadmap)
 
@@ -169,4 +169,4 @@ See `friction_log.md` for the 9-item list. Three highest-priority:
 
 ## Provenance
 
-All numbers reproducible from `scripts/01_..05_...py` with the Ziegler h5ad and the scenic env. Logs in `results/comparison_run.log` and `results/run.log`.
+All numbers are reproducible from `scripts/01_..05_...py` with the Ziegler h5ad. `results/run.log` records the RustScenic stage rerun with rustscenic 0.4.4 on 2026-05-15; `results/comparison_run.log` records the pyscenic reference comparison.

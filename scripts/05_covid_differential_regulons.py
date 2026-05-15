@@ -24,10 +24,12 @@ import pandas as pd
 import anndata as ad
 from scipy import stats
 
+from paths import ziegler_h5ad_path
+
 OUT = Path(__file__).parent.parent / "results"
 FIG = Path(__file__).parent.parent / "figures"
 
-DATA = Path("/Users/ekin/covid-airway-deconvolution/data/ziegler2021_nasopharyngeal.h5ad")
+DATA = ziegler_h5ad_path()
 
 
 def bh_fdr(pvals):

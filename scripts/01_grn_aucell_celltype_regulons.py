@@ -41,7 +41,9 @@ import scanpy as sc
 import rustscenic.grn
 import rustscenic.aucell
 
-DATA = Path("/Users/ekin/covid-airway-deconvolution/data/ziegler2021_nasopharyngeal.h5ad")
+from paths import ziegler_h5ad_path
+
+DATA = ziegler_h5ad_path()
 OUT = Path(__file__).parent.parent / "results"
 OUT.mkdir(exist_ok=True)
 
@@ -54,8 +56,8 @@ EXPECTED = {
     "SOX2":   ("Basal Cells",    "Que et al 2009 Development — SOX2 maintains proximal airway identity"),
     "MYB":    ("Deuterosomal Cells", "Pan et al 2014 Nature — MYB drives multiciliogenesis"),
     "ASCL3":  ("Ionocytes",      "Plasschaert et al 2018 Nature — ASCL3 ionocyte lineage"),
-    "STAT1":  ("Interferon Responsive Ciliated Cells", "Canonical IFN-I response"),  # detailed annotation
-    "IRF7":   ("Interferon Responsive Ciliated Cells", "Canonical IFN-I response"),
+    "STAT1":  ("Ciliated Cells",  "Canonical IFN-I response"),
+    "IRF7":   ("Ciliated Cells",  "Canonical IFN-I response"),
     "SPI1":   ("Macrophages",    "Scott et al 1994 Science — PU.1/SPI1 myeloid master"),
     "CEBPB":  ("Macrophages",    "Akira et al — myeloid/inflammatory"),
     "PAX5":   ("B Cells",        "Urbánek et al 1994 — PAX5 B-lymphoid"),
@@ -141,6 +143,7 @@ def main():
     # z-score across celltypes so relative-specificity surfaces
     z_coarse = (mean_per_ct - mean_per_ct.mean(axis=0)) / (mean_per_ct.std(axis=0) + 1e-12)
     z_coarse.to_csv(OUT / "z_activity_per_coarse_celltype.csv")
+    z_detailed = (mean_per_detailed - mean_per_detailed.mean(axis=0)) / (mean_per_detailed.std(axis=0) + 1e-12)
 
     print("\n[8/8] checking expected-TF benchmarks against lit:")
     print(f"     (z-score ≥ 1 means the TF's regulon is 1+ sigma above the mean celltype activity)\n")
@@ -151,20 +154,14 @@ def main():
             rows.append((tf, expected_ct, "(no regulon — TF not in GRN output)", None, None, ref))
             continue
         if expected_ct not in z_coarse.index:
-            # Try detailed
-            if expected_ct in z_coarse.index:
-                pass  # fallthrough
+            if expected_ct in z_detailed.index:
+                zval = z_detailed.loc[expected_ct, reg_name]
+                top_ct = z_detailed[reg_name].idxmax()
+                top_z = z_detailed[reg_name].max()
             else:
-                # Maybe detailed-level
-                if expected_ct in (z_per := (mean_per_detailed - mean_per_detailed.mean(axis=0)) /
-                                    (mean_per_detailed.std(axis=0) + 1e-12)).index:
-                    zval = z_per.loc[expected_ct, reg_name]
-                    top_ct = z_per[reg_name].idxmax()
-                    top_z = z_per[reg_name].max()
-                else:
-                    rows.append((tf, expected_ct, "(expected ct not in data)", None, None, ref))
-                    continue
-            rows.append((tf, expected_ct, "detailed-level", zval, top_ct, ref))
+                rows.append((tf, expected_ct, "(expected ct not in data)", None, None, ref))
+                continue
+            rows.append((tf, expected_ct, top_ct, zval, top_z, ref))
             continue
         zval = z_coarse.loc[expected_ct, reg_name]
         top_ct = z_coarse[reg_name].idxmax()
@@ -193,10 +190,15 @@ def main():
     }
     with open(OUT / "summary.json", "w") as fh:
         json.dump(summary, fh, indent=2)
+        fh.write("\n")
 
     print(f"\n=== SUMMARY ===")
     print(json.dumps(summary, indent=2))
-    print(f"\nartefacts in {OUT}")
+    try:
+        out_display = OUT.relative_to(Path.cwd())
+    except ValueError:
+        out_display = OUT
+    print(f"\nartefacts in {out_display}")
 
 
 if __name__ == "__main__":

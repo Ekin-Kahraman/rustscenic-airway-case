@@ -1,7 +1,7 @@
 """Head-to-head: rustscenic.aucell vs pyscenic.aucell on Ziegler 2021.
 
-SETUP (MUST BE RUN IN THE rustscenic-ref3 VENV WITH pyscenic INSTALLED):
-  /private/tmp/rustscenic-ref3/bin/python scripts/03_headtohead_pyscenic_aucell.py
+SETUP (MUST BE RUN IN AN ENVIRONMENT WITH pyscenic INSTALLED):
+  python scripts/03_headtohead_pyscenic_aucell.py
 
 Isolation strategy:
   - We cannot run arboreto on Ziegler (its own env pandas pin conflicts with
@@ -41,7 +41,9 @@ from pyscenic.aucell import aucell as py_aucell
 from pyscenic.utils import modules_from_adjacencies
 from ctxcore.genesig import Regulon
 
-DATA = Path("/Users/ekin/covid-airway-deconvolution/data/ziegler2021_nasopharyngeal.h5ad")
+from paths import ziegler_h5ad_path
+
+DATA = ziegler_h5ad_path()
 OUT = Path(__file__).parent.parent / "results" / "comparison"
 OUT.mkdir(parents=True, exist_ok=True)
 
