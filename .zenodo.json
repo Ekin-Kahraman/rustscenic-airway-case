@@ -1,0 +1,35 @@
+{
+  "title": "rustscenic airway validation case study on Ziegler 2021 nasopharyngeal scRNA-seq",
+  "upload_type": "software",
+  "description": "A reproducible case study comparing RustScenic AUCell output against pySCENIC on the Ziegler 2021 nasopharyngeal single-cell atlas, with COVID-positive versus COVID-negative differential regulon analysis.",
+  "creators": [
+    {
+      "name": "Kahraman, Ekin",
+      "affiliation": "University of East Anglia"
+    }
+  ],
+  "license": "MIT",
+  "access_right": "open",
+  "keywords": [
+    "bioinformatics",
+    "single-cell RNA-seq",
+    "SCENIC",
+    "pySCENIC",
+    "AUCell",
+    "COVID-19",
+    "airway",
+    "gene regulatory networks"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/Ekin-Kahraman/rustscenic",
+      "relation": "isSupplementTo",
+      "resource_type": "software"
+    },
+    {
+      "identifier": "https://doi.org/10.1016/j.cell.2021.07.023",
+      "relation": "isDerivedFrom",
+      "resource_type": "publication-article"
+    }
+  ]
+}

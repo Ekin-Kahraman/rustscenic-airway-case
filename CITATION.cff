@@ -2,8 +2,8 @@ cff-version: 1.2.0
 message: "If you use this case study, please cite the repository, rustscenic, and the Ziegler et al. source dataset."
 title: "rustscenic airway validation case study on Ziegler 2021 nasopharyngeal scRNA-seq"
 type: software
-version: "0.1.0"
-date-released: "2026-05-15"
+version: "0.1.1"
+date-released: "2026-05-16"
 license: MIT
 repository-code: "https://github.com/Ekin-Kahraman/rustscenic-airway-case"
 url: "https://github.com/Ekin-Kahraman/rustscenic-airway-case"
