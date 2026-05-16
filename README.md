@@ -4,10 +4,10 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20230540.svg)](https://doi.org/10.5281/zenodo.20230540)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-**Companion repo to** [`Ekin-Kahraman/rustscenic`](https://github.com/Ekin-Kahraman/rustscenic) - not a demo. Two deliverables:
+**Companion repo to** [`Ekin-Kahraman/rustscenic`](https://github.com/Ekin-Kahraman/rustscenic). This repo has two deliverables:
 
 1. **Tool validation** - head-to-head of [rustscenic](https://github.com/Ekin-Kahraman/rustscenic) against pyscenic on a published 58-donor, 32,588-cell airway atlas (Ziegler et al. 2021 *Cell*). Same input, same regulons, same env, isolated AUCell kernel. Answers: "does rustscenic produce pyscenic's numbers on real atlas-scale data?"
-2. **Biology** - COVID+ vs COVID− differential regulon analysis, extending the [covid-airway-deconvolution](https://github.com/Ekin-Kahraman/covid-airway-deconvolution) project from "which cells are perturbed" to "which regulatory programmes rewire during SARS-CoV-2 infection". Candidate for a standalone paper.
+2. **Biology** - COVID+ vs COVID− differential regulon analysis, extending the [covid-airway-deconvolution](https://github.com/Ekin-Kahraman/covid-airway-deconvolution) project from "which cells are perturbed" to "which regulatory programmes rewire during SARS-CoV-2 infection". Candidate for a follow-up technical report.
 
 The source h5ad is not committed. To rerun the analysis, place the Ziegler file locally and set `ZIEGLER_H5AD=/path/to/ziegler2021_nasopharyngeal.h5ad`, or keep the sibling-repo default at `../covid-airway-deconvolution/data/ziegler2021_nasopharyngeal.h5ad`.
 
