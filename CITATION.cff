@@ -4,6 +4,7 @@ title: "rustscenic airway validation case study on Ziegler 2021 nasopharyngeal s
 type: software
 version: "0.1.1"
 date-released: "2026-05-16"
+doi: "10.5281/zenodo.20230541"
 license: MIT
 repository-code: "https://github.com/Ekin-Kahraman/rustscenic-airway-case"
 url: "https://github.com/Ekin-Kahraman/rustscenic-airway-case"

@@ -1,5 +1,9 @@
 # rustscenic on Ziegler 2021 nasopharyngeal atlas - validation + biology
 
+[![CI](https://github.com/Ekin-Kahraman/rustscenic-airway-case/actions/workflows/ci.yml/badge.svg)](https://github.com/Ekin-Kahraman/rustscenic-airway-case/actions/workflows/ci.yml)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20230540.svg)](https://doi.org/10.5281/zenodo.20230540)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
 **Companion repo to** [`Ekin-Kahraman/rustscenic`](https://github.com/Ekin-Kahraman/rustscenic) - not a demo. Two deliverables:
 
 1. **Tool validation** - head-to-head of [rustscenic](https://github.com/Ekin-Kahraman/rustscenic) against pyscenic on a published 58-donor, 32,588-cell airway atlas (Ziegler et al. 2021 *Cell*). Same input, same regulons, same env, isolated AUCell kernel. Answers: "does rustscenic produce pyscenic's numbers on real atlas-scale data?"
@@ -77,3 +81,8 @@ python reference/smoke_pyscenic_reference.py
 ## Licence and citation
 
 MIT. Citation metadata is in [`CITATION.cff`](CITATION.cff).
+
+Zenodo archive:
+
+- Version DOI for `v0.1.1`: [`10.5281/zenodo.20230541`](https://doi.org/10.5281/zenodo.20230541)
+- Concept DOI for all versions: [`10.5281/zenodo.20230540`](https://doi.org/10.5281/zenodo.20230540)
