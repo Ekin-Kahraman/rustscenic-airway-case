@@ -2,10 +2,11 @@
 
 Using rustscenic regulon activities, within each cell type, test which regulons
 are differentially active between COVID+ and COVID- cells. This extends the
-covid-airway-deconvolution story from "which cells are perturbed" to "which
-regulatory programmes are rewired during infection".
+covid-airway-deconvolution analysis from cell-type proportions to exploratory
+gene-programme activity differences associated with infection status.
 
-Uses Wilcoxon rank-sum within each cell type + donor-stratified correction:
+Uses cell-level Wilcoxon rank-sum within each cell type. Donor IDs are collected
+but not used for adjustment; these are not donor-independent disease-effect tests:
   - For each cell type:
     - For each regulon:
       - Collect per-cell activity, split by SARSCoV2_PCR_Status

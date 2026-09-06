@@ -6,10 +6,10 @@
 
 ## What this case study establishes
 
-1. **rustscenic reproduces pyscenic's biological conclusions on real atlas-scale data.** Same 8 canonical airway TFs hit their expected cell types in both tools. Same TFs fail in both tools. Per-cell regulon-activity Pearson is **0.984 mean, 91.7% of cells > 0.95**.
+1. **RustScenic activity scores agree closely with unit-weight pySCENIC on this dataset.** Both recover 8 of 14 expected airway transcription factors. Mean per-cell Pearson correlation is **0.984**, with **91.7% of cells above 0.95**. This is a fixed-gene-set scoring comparison, not full-pipeline equivalence.
 2. **rustscenic is 21–27× faster than pyscenic** at the AUCell stage, on the same data, same regulons, same env (0.25 s vs 5.29–6.81 s on 31,602 cells × 59 regulons).
-3. **arboreto is broken in pyscenic's own environment** - the scenic-env pins pandas to 1.5.3 (ctxcore requirement), which breaks dask's own-pandas dep. This isn't a rustscenic stunt; pyscenic + arboreto cannot actually run together on modern Python.
-4. **Substantive biology:** COVID+ vs COVID− differential regulon analysis across 11 cell types surfaces a coherent interferon-response programme (IRF7 ↑ across Goblet, Ionocyte, Developing Ciliated, Mitotic Basal) and an AP-1 / stress-response programme ↓ in squamous cells - extending the covid-airway-deconvolution cell-type-proportion story to regulatory mechanism.
+3. **Reference-environment requirements are documented.** Some tested package combinations failed; the repository supplies a pinned environment for the AUCell comparison.
+4. **Exploratory biological patterns:** COVID-associated activity differences include higher interferon-associated scores and lower AP-1/stress-associated scores in selected cell types. These cell-level comparisons do not account for donor dependence and do not establish regulatory mechanisms.
 
 ## Head-to-head: rustscenic vs pyscenic.aucell
 
@@ -26,7 +26,9 @@ Identical input on both sides - same 59 regulons built from rustscenic's GRN adj
 | Per-regulon Pearson (median) | **0.988** | 0.953 |
 | Cell-level argmax regulon match | **85.4 %** | 50.1 % |
 
-**Reading:** against pyscenic run with the *same semantics as us* (unit weights), we agree to 0.98 per-cell Pearson - essentially identical for clustering / marker analysis purposes. Against pyscenic's weighted default we agree slightly less; that's a known v0.2 item (weighted AUCell).
+**Reading:** agreement is higher with unit-weight pySCENIC than with its weighted
+setting. High correlation does not by itself establish equivalent clustering,
+marker detection or biological conclusions; those need separate checks.
 
 ### Runtime - same 31,602-cell × 59-regulon workload
 
@@ -59,17 +61,22 @@ Identical input on both sides - same 59 regulons built from rustscenic's GRN adj
 
 **Hits:** 8/14 rustscenic, 8/14 pyscenic-unit, 9/14 pyscenic-weighted.
 
-The miss set is **identical across all three tools** - STAT1, MYB, IRF7, SOX2, PAX5 all fail to top their literature-expected cell type in every implementation. These are real properties of the dataset + top-50-target-regulon construction, not a rustscenic limitation:
+The methods share five missed expectations: STAT1, MYB, IRF7, SOX2 and PAX5.
+SPDEF is an additional miss for RustScenic and unit-weight pySCENIC, but not for
+weighted pySCENIC. Possible explanations to investigate include annotation
+resolution, gene-set construction and rare-cell representation:
 - **STAT1, IRF7** - at detailed-cluster resolution, STAT1 DOES hit "Interferon Responsive Ciliated Cells" (z=2.02). Rolled into coarse "Ciliated Cells" it drops below the noise floor.
 - **MYB** drives the deuterosomal→ciliated transition; top-50 targets skew toward the committed ciliated state.
 - **SOX2** is broadly expressed across proximal airway, not basal-specific.
 - **PAX5** only has 71 B cells to work with (the dataset is airway-focused).
 
-**That all three tools make the same mistakes here is important** - it shows the tool-to-tool variation is much smaller than the dataset-inherent noise.
+Shared misses help identify follow-up questions, but they do not measure
+dataset noise or rule out limitations common to the scoring methods.
 
-### Install matrix
+### Historical environment checks
 
-Fresh Python 3.12 environment, one `pip install` per cell:
+The original case study recorded the following Python 3.12 installation checks.
+They describe those package combinations, not current compatibility in general:
 
 | Tool | pip install succeeds | import succeeds | GRN runs | AUCell runs |
 |---|:---:|:---:|:---:|:---:|
@@ -78,17 +85,24 @@ Fresh Python 3.12 environment, one `pip install` per cell:
 | arboreto | succeeds | ✓ | **fails: `TypeError: Must supply at least one delayed object`** (dask_expr) | - |
 | arboreto (in scenic env, pandas=1.5.3) | ✓ | **fails: `Dask requires pandas ≥ 2.0.0`** | - | - |
 
-**There is no environment in 2026 Python where arboreto actually runs.** That's the user-facing truth behind the install pitch.
+For a reproducible AUCell comparison, use the pinned environment in `reference/`.
+Later [controlled RustScenic benchmarks](https://github.com/Ekin-Kahraman/rustscenic/blob/0c8eb00539e3860c78e452c8661cc2735c169386/validation/scaling/IFB_REAL_RNA_GRN_2026-08-28.md)
+successfully ran arboreto; the historical failures above are not a universal limitation.
 
 ## Biology: COVID+ vs COVID− differential regulons
 
-For each of 11 cell types with ≥100 cells per COVID arm, we tested each regulon for differential activity between COVID+ (n=18,073) and COVID− (n=14,515) cells using Wilcoxon rank-sum + BH-FDR within cell type.
+For each of 11 cell types with ≥100 cells per COVID arm, we tested each regulon for differential activity between COVID-positive and COVID-negative cells using Wilcoxon rank-sum + BH-FDR within cell type.
+
+The script collects donor IDs but does not use them in its statistical tests.
+Cells from the same donor are not independent replicates. Reported q-values
+are therefore exploratory cell-level results, not donor-adjusted disease-effect
+tests. Confirmatory analysis would need donor-aware modelling or aggregation.
 
 **Total differentially active (cell-type, regulon) pairs at q < 0.01: hundreds** (see `results/covid_differential_regulons.csv`).
 
 ### Key findings - interferon programme up, stress programme down
 
-**IRF7 regulon ↑ in COVID+ across 7/11 cell types** - the canonical type I IFN antiviral programme, strongly activated:
+**IRF7-associated activity is higher in COVID-positive cells across 7/11 cell types:**
 
 | Cell type | IRF7 log2 FC | q-value |
 |---|---:|---:|
@@ -114,25 +128,22 @@ IRF9 - another IFN-response regulator - is similarly up in Mitotic Basal (+1.43)
 
 This is consistent with Ziegler et al.'s observation that SARS-CoV-2 infection induces a squamous metaplasia with a distinct transcriptional state - the AP-1 immediate-early-gene programme characteristic of healthy squamous cells is suppressed in the COVID+ subpopulation.
 
-**Secretory cells: WNT / pluripotency programme UP** - TCF7 (+1.10), LEF1 (+1.12), EOMES (+1.34), KLF15 (+1.03). Consistent with regenerative-response signatures reported in airway epithelial injury literature.
+**Secretory cells:** higher TCF7 (+1.10), LEF1 (+1.12), EOMES (+1.34) and KLF15
+(+1.03) gene-set scores motivate follow-up of regeneration-associated patterns.
+These scores do not establish pathway activation or a regenerative mechanism.
 
 **Heatmap of top 20 differential regulons × cell type:** `figures/fig6_covid_differential.png`.
 
 ### Why this matters for the covid-airway-deconvolution project
 
-Your deconvolution model showed:
-- Basal cell depletion (−5.1%) in COVID+ samples
-- Goblet expansion (+5.4%)
-- T cell infiltration (+5.1%)
-- Macrophage recruitment (+1.8%)
+The projects address complementary questions: the deconvolution model estimates
+cell-type proportions, while this analysis compares activity within cell types.
+Together they motivate hypotheses about changes in cellular composition and
+gene programmes during COVID-19.
 
-This analysis shows:
-- Basal cells that remain in COVID+ samples are in an active IFN-response state (IRF7 +0.40, q=1.3e−4)
-- Mitotic basal cells - the ones trying to regenerate the depleted epithelium - are the most IFN-activated (IRF9 +1.43, EBF1 +1.17, BACH2 +1.15)
-- Goblet expansion coincides with IRF7/RELB/SPDEF/XBP1 activation - an inflammatory mucus programme, not homeostatic goblet differentiation
-- The squamous metaplasia Ziegler reported reflects a shutdown of the canonical squamous AP-1 programme (not just expansion of a normal squamous pool)
-
-**That's a mechanistic hypothesis the deconvolution alone couldn't generate.** Follow-up: run rustscenic.grn on the COVID+ and COVID− subsets separately and see which GRN *edges* are rewired, not just which regulon activities shift.
+Both analyses depend on the reference data and modelling choices. Their agreement
+is not independent validation or evidence of a causal mechanism. A useful next
+step is a donor-aware comparison, followed by validation in an independent cohort.
 
 ## Figures produced
 
@@ -157,11 +168,12 @@ This analysis shows:
 | pyscenic.aucell unit-weight comparison | pyscenic | 6.81 s | head-to-head reference |
 | pyscenic.aucell weighted comparison | pyscenic | 5.29 s | realistic pyscenic default |
 | COVID± differential per cell type | scipy Wilcoxon + BH-FDR | 10 s | 11 cell types × 59 regulons |
-| **Total end-to-end** |  | **~80 s** | fits in a coffee break |
+| **Total end-to-end** |  | **~80 s** | recorded run; stage times rounded |
 
-## Friction discovered (fed back to rustscenic v0.2 roadmap)
+## Historical development notes
 
-See `friction_log.md` for the 9-item list. Three highest-priority:
+These notes describe the original case-study version, not current feature
+availability. See `friction_log.md` for the 9-item list. Original priorities:
 
 1. **No default TF list shipped.** First users will not know to fetch `allTFs_hg38.txt` from aertslab. Fix: add `rustscenic.grn.default_tf_list(species="hs")` helper.
 2. **`rustscenic.aucell` does not accept per-gene regulon weights.** pyscenic's default uses GRN-importance weights; our unit-weight output diverges from weighted pyscenic by ~5 %. Fix: accept `(name, {gene: weight})` regulons.

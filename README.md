@@ -1,19 +1,24 @@
-# rustscenic on Ziegler 2021 nasopharyngeal atlas - validation + biology
+# Gene regulation in COVID-19 airway cells
 
 [![CI](https://github.com/Ekin-Kahraman/rustscenic-airway-case/actions/workflows/ci.yml/badge.svg)](https://github.com/Ekin-Kahraman/rustscenic-airway-case/actions/workflows/ci.yml)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20230540.svg)](https://doi.org/10.5281/zenodo.20230540)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-**Companion repo to** [`Ekin-Kahraman/rustscenic`](https://github.com/Ekin-Kahraman/rustscenic). This repo has two deliverables:
+This [RustScenic](https://github.com/Ekin-Kahraman/rustscenic) case study combines
+software validation with an exploratory analysis of gene regulation in a
+published airway atlas (Ziegler et al. 2021, 58 donors).
 
-1. **Tool validation** - head-to-head of [rustscenic](https://github.com/Ekin-Kahraman/rustscenic) against pyscenic on a published 58-donor, 32,588-cell airway atlas (Ziegler et al. 2021 *Cell*). Same input, same regulons, same env, isolated AUCell kernel. Answers: "does rustscenic produce pyscenic's numbers on real atlas-scale data?"
-2. **Biology** - COVID+ vs COVID− differential regulon analysis, extending the [covid-airway-deconvolution](https://github.com/Ekin-Kahraman/covid-airway-deconvolution) project from "which cells are perturbed" to "which regulatory programmes rewire during SARS-CoV-2 infection". Candidate for a follow-up technical report.
+1. **Do the activity scores agree with pySCENIC?** Compare both tools using the same expression data and candidate gene sets.
+2. **Which gene programmes differ with COVID-19 status?** Compare activity within airway cell types, extending the [cell-type proportion analysis](https://github.com/Ekin-Kahraman/covid-airway-deconvolution).
 
 The source h5ad is not committed. To rerun the analysis, place the Ziegler file locally and set `ZIEGLER_H5AD=/path/to/ziegler2021_nasopharyngeal.h5ad`, or keep the sibling-repo default at `../covid-airway-deconvolution/data/ziegler2021_nasopharyngeal.h5ad`.
 
-## Headline (tool validation)
+## Tool validation
 
 Against pyscenic on the same 31,602 cells × 59 regulons on the same machine:
+
+A regulon is a candidate set of genes associated with a transcription factor.
+The two pySCENIC settings use either equal gene weights or network-derived weights.
 
 | | rustscenic | pyscenic-unit | pyscenic-weighted |
 |---|---:|---:|---:|
@@ -22,15 +27,23 @@ Against pyscenic on the same 31,602 cells × 59 regulons on the same machine:
 | Canonical TF hits (of 14) | 8 | 8 | 9 |
 | AUCell wall-time | **0.25 s** | 6.81 s | 5.29 s |
 
-**All three tools miss the same 5 TFs** (STAT1, MYB, IRF7, SOX2, PAX5) - the tool-to-tool variation is smaller than the dataset-inherent noise. See [`CASE_STUDY.md`](CASE_STUDY.md) for the full interpretation.
+The methods share five missed expected transcription factors. This comparison
+checks activity scoring on fixed gene sets, not agreement of complete network
+inference or proof that every biological prediction is correct. See
+[`CASE_STUDY.md`](CASE_STUDY.md) for the full comparison.
 
-## Headline (biology)
+## Biological analysis
 
-Wilcoxon rank-sum (BH-FDR per cell type) on 11 cell types with ≥100 cells per COVID arm:
+The analysis compares COVID-positive and negative cells within 11 cell types:
 
-- **Type I IFN programme (IRF7 regulon) ↑ in COVID+** across 7/11 cell types - strongest in Ionocytes (+1.34 log₂ FC, q = 6e-17). Canonical antiviral response.
-- **AP-1 / stress-response programme ↓ in squamous cells** (JUN, JUNB, NR4A1, XBP1, all log₂ FC < −0.5, q < 1e-90). Consistent with the SARS-CoV-2-induced squamous metaplasia Ziegler reported - the canonical squamous stress programme is suppressed.
-- **WNT / regenerative programme ↑ in secretory cells** (TCF7 +1.10, LEF1 +1.12, EOMES +1.34). Consistent with regenerative response to epithelial damage.
+- Higher interferon-associated activity (IRF7 gene set) in 7 of 11 cell types.
+- Lower AP-1 and stress-associated activity in squamous cells.
+- Higher activity of several gene sets associated with regeneration in secretory cells.
+
+These are exploratory associations. Tests compare individual cells and adjust
+for multiple comparisons within each cell type; they do **not** model donor
+dependence. Donor-level confirmation is needed before interpreting the reported
+significance as evidence of disease effects or regulatory mechanisms.
 
 See [`figures/fig6_covid_differential.png`](figures/fig6_covid_differential.png).
 
@@ -49,6 +62,7 @@ See [`figures/fig6_covid_differential.png`](figures/fig6_covid_differential.png)
 ## Reproduction
 
 Requires:
+
 1. The Ziegler h5ad from the [covid-airway-deconvolution](https://github.com/Ekin-Kahraman/covid-airway-deconvolution) repo
 2. rustscenic ≥ 0.4.4 (`pip install -r requirements.txt`)
 3. For head-to-head: the pinned pySCENIC reference env in [`reference/`](reference/)
