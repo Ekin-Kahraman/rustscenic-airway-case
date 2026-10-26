@@ -68,7 +68,8 @@ def main():
 
     # Filter out cell types with <100 cells in either arm
     ct_counts = meta.groupby(["celltype", "covid"], observed=False).size().unstack(fill_value=0)
-    valid_cts = ct_counts.index[(ct_counts.get("pos", 0) >= 100) & (ct_counts.get("neg", 0) >= 100)]
+    arm_counts = ct_counts.reindex(columns=["pos", "neg"], fill_value=0)
+    valid_cts = ct_counts.index[(arm_counts >= 100).all(axis=1)]
     print(f"cell types with ≥100 cells in both arms: {len(valid_cts)}")
     print(ct_counts.loc[valid_cts].to_string())
 

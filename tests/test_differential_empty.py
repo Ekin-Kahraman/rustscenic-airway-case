@@ -23,14 +23,16 @@ RESULT_COLUMNS = [
 
 
 class EmptyDifferentialTests(unittest.TestCase):
-    def check_empty_result(self, n_per_arm: int, constant: bool) -> None:
+    def check_empty_result(
+        self, n_per_arm: int, constant: bool, statuses: tuple[str, str] = ("pos", "neg")
+    ) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             cells = [f"cell_{i}" for i in range(n_per_arm * 2)]
             obs = pd.DataFrame(
                 {
                     "donor_id": ["synthetic_donor"] * len(cells),
-                    "SARSCoV2_PCR_Status": ["pos"] * n_per_arm + ["neg"] * n_per_arm,
+                    "SARSCoV2_PCR_Status": [statuses[0]] * n_per_arm + [statuses[1]] * n_per_arm,
                     "Coarse_Cell_Annotations": ["synthetic_type"] * len(cells),
                 },
                 index=cells,
@@ -67,6 +69,14 @@ class EmptyDifferentialTests(unittest.TestCase):
 
     def test_all_regulons_have_constant_activity(self) -> None:
         self.check_empty_result(n_per_arm=100, constant=True)
+
+    def test_neither_expected_covid_status_is_present(self) -> None:
+        self.check_empty_result(n_per_arm=100, constant=False, statuses=("unknown", "unknown"))
+
+    def test_one_expected_covid_status_is_missing(self) -> None:
+        for status in ("pos", "neg"):
+            with self.subTest(status=status):
+                self.check_empty_result(n_per_arm=100, constant=False, statuses=(status, "unknown"))
 
 
 if __name__ == "__main__":
