@@ -15,7 +15,7 @@ but not used for adjustment; these are not donor-independent disease-effect test
   - BH-FDR correct per cell type
 
 Outputs:
-  covid_differential_regulons_per_celltype.csv — full table
+  covid_differential_regulons.csv — full table
   figures/fig6_covid_differential.png — top hits heatmap
 """
 from __future__ import annotations
@@ -95,7 +95,10 @@ def main():
                 "ranksum_stat": stat, "pvalue": pval,
                 "n_pos": len(p_vals), "n_neg": len(n_vals),
             })
-    df = pd.DataFrame(rows)
+    df = pd.DataFrame(rows, columns=[
+        "celltype", "regulon", "mean_pos", "mean_neg", "log2_fc",
+        "ranksum_stat", "pvalue", "n_pos", "n_neg",
+    ])
     # BH-FDR per cell type
     df["qvalue"] = df.groupby("celltype")["pvalue"].transform(bh_fdr)
     df = df.sort_values(["celltype", "qvalue"])
