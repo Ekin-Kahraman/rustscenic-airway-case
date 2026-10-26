@@ -32,3 +32,5 @@ jobs:
           pip install -r reference/requirements-pyscenic-aucell.txt
       - name: Compare tiny RustScenic and pySCENIC AUCell output
         run: python reference/smoke_pyscenic_reference.py
+      - name: Check empty differential results on synthetic cells
+        run: python -m unittest discover -s tests -v
