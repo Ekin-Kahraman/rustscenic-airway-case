@@ -57,7 +57,7 @@ See [`figures/fig6_covid_differential.png`](figures/fig6_covid_differential.png)
 - `CASE_STUDY.md` - long-form writeup linking validation + biology
 - `friction_log.md` - 9 first-user observations fed back to rustscenic v0.2
 - `figures/` - 6 PNGs (committed; small)
-- `results/` - intermediate parquets/CSVs (gitignored; reproducible from scripts)
+- `results/` - selected result tables and run logs are committed; large intermediate files are gitignored
 
 ## Reproduction
 
@@ -67,13 +67,16 @@ Requires:
 2. rustscenic ≥ 0.4.4 (`pip install -r requirements.txt`)
 3. For head-to-head: the pinned pySCENIC reference env in [`reference/`](reference/)
 
-Run in order:
+Run in Bash from the repository root. Stop on a failed stage and capture both
+run logs used by the output validator:
 
 ```bash
+set -euo pipefail
 export ZIEGLER_H5AD=/path/to/ziegler2021_nasopharyngeal.h5ad
+mkdir -p results
 python scripts/01_grn_aucell_celltype_regulons.py 2>&1 | tee results/run.log
 python scripts/02_make_figures.py
-python scripts/03_headtohead_pyscenic_aucell.py
+python scripts/03_headtohead_pyscenic_aucell.py 2>&1 | tee results/comparison_run.log
 python scripts/04_comparison_figures.py
 python scripts/05_covid_differential_regulons.py
 python scripts/validate_outputs.py

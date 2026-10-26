@@ -12,13 +12,17 @@ python scripts/validate_outputs.py
 python -m py_compile scripts/*.py
 ```
 
-To rerun the full case study, provide the Ziegler h5ad:
+To rerun the full case study, provide the Ziegler h5ad and run these commands in
+Bash from the repository root. Both logs are refreshed, and a failed stage stops
+the sequence:
 
 ```bash
+set -euo pipefail
 export ZIEGLER_H5AD=/path/to/ziegler2021_nasopharyngeal.h5ad
+mkdir -p results
 python scripts/01_grn_aucell_celltype_regulons.py 2>&1 | tee results/run.log
 python scripts/02_make_figures.py
-python scripts/03_headtohead_pyscenic_aucell.py
+python scripts/03_headtohead_pyscenic_aucell.py 2>&1 | tee results/comparison_run.log
 python scripts/04_comparison_figures.py
 python scripts/05_covid_differential_regulons.py
 python scripts/validate_outputs.py
